@@ -32,5 +32,5 @@ Sources live in `HearthLedger/`: `scene.html` (UI), `ledger.js` (model, inlined 
 ### Status
 - Verified locally: the build runs and the smoke test passes. The page also renders, adds items
   and re-arms chores in headless Chrome against a mock bridge that runs the real `storage.js`.
-- Not yet verified on the phone: import, bridge load/save, notifications firing.
-- Task and profile ids are placeholders (900–904) until the phone assigns real ones.
+- Not yet verified on the phone: bridge load/save, notifications firing.
+- Imported on the Pixel 2026-11-24; task/profile ids in build.py match what the phone assigned.

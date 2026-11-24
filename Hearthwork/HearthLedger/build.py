@@ -26,8 +26,8 @@ OUT = HERE.parent / "Hearth_Ledger.prj.xml"
 PROJECT = "Hearth Ledger"
 SCENE = "Hearth Ledger"
 STAMP = 1795521476000  # keep stable so rebuilds diff cleanly
-# Placeholder ids for the first import; replace with what the phone assigns so exports diff cleanly.
-T_STORAGE, T_REMINDER, T_OPEN, P_DUE, P_POLL = 900, 901, 902, 903, 904
+# ids as the phone assigned them on first import (2026-11-24), so exports diff cleanly
+T_STORAGE, T_REMINDER, T_OPEN, P_DUE, P_POLL = 399, 402, 403, 404, 414
 POLL_MINUTES = 5
 
 
