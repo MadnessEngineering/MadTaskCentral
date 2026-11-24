@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hearth Ledger</title>
+<style>
+:root{color-scheme:dark;--bg:#16120e;--card:#241c15;--line:#4a3a2b;--ink:#fbf1e4;--dim:#c4ae96;--ember:#ffb36b;--go:#3f6b2f;--ok:#7cc46a;--yel:#f2c14e;--red:#ff6b6b;--btn:#33281e;--field:#1c1610}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,sans-serif}
+body{padding:12px 12px 40px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+h1{margin:0;font-size:24px;letter-spacing:-.02em}
+h1 span{color:var(--ember)}
+#status{color:var(--dim);font-size:12px;text-align:right}
+#msg{color:var(--yel);margin:6px 0}
+#msg:empty{display:none}
+button,input,select,textarea{font:inherit;color:inherit;border:1px solid var(--line);border-radius:10px;background:var(--btn);padding:8px 10px;min-height:42px}
+button{cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+button:active{filter:brightness(1.3)}
+button.go{background:var(--go)}
+button.small{min-height:34px;padding:4px 9px;font-size:14px}
+button.on{background:var(--ember);color:#16120e;font-weight:700}
+input,select,textarea{background:var(--field);width:100%}
+.hint{color:var(--dim);font-size:13px}
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 10px}
+.tabs button{font-weight:600;color:var(--dim);padding:4px 2px;font-size:14px;line-height:1.2}
+.tabs small{display:block;font-size:11px;font-weight:400}
+.tabs button.on{color:#16120e}
+.tabs .bad{display:inline-block;margin-left:4px;min-width:18px;padding:0 5px;border-radius:999px;background:var(--red);color:#16120e;font-size:11px;font-weight:800}
+/* learned chips: tap adds, hold loads into the form */
+.lchips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.lchips button{min-height:34px;padding:4px 12px;font-size:14px;border-radius:999px}
+.lchips small{color:var(--dim);font-size:11px;margin-left:4px}
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:12px;padding:10px;margin:0 0 10px}
+.card.over{border-left-color:var(--red)}.card.soon{border-left-color:var(--yel)}.card.later{border-left-color:var(--ok)}
+.card.form{border-left-color:var(--ember)}
+.row{display:flex;gap:6px;margin:6px 0}
+.row>*{flex:1;min-width:0}
+.row .narrow{flex:0 0 64px}
+.row select.narrow{flex:0 0 104px}
+.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:6px 0}
+.quick button{padding:4px 2px}
+/* item rows */
+.t{border-top:1px solid var(--line);padding:6px 0}
+.t:first-child{border-top:0}
+.tl{display:flex;align-items:center;gap:8px}
+.tl .what{flex:1;min-width:0}
+.tl .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl .when{color:var(--dim);font-size:12px}
+.cd{font-variant-numeric:tabular-nums;color:var(--ember);font-size:14px;white-space:nowrap}
+.soon .cd{color:var(--yel)}
+.over .cd{color:var(--red);font-weight:700}
+.kind{font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:5px;text-transform:uppercase;background:var(--btn);color:var(--dim);flex:0 0 auto}
+.k-dairy{background:#1d2c4d;color:#a9c4ff}.k-meat{background:#3a2020;color:#ff9a8a}.k-produce{background:#1c3a22;color:#7fdc8f}.k-bread{background:#3b2a12;color:#f2b35e}.k-leftover{background:#3a1f38;color:#f39ad8}
+.k-kitchen{background:#3b2a12;color:#f2b35e}.k-bath{background:#14363d;color:#6fe0e8}.k-laundry{background:#1d2c4d;color:#8fb2ff}.k-plants{background:#1c3a22;color:#7fdc8f}.k-trash{background:#2d2d14;color:#e8e06f}.k-upkeep{background:#3a2420;color:#ff9a7a}
+.k-rent{background:#3a2420;color:#ff9a7a}.k-utility{background:#2d2d14;color:#e8e06f}.k-sub{background:#3a1f38;color:#f39ad8}.k-insurance{background:#14363d;color:#6fe0e8}.k-car{background:#1d2c4d;color:#8fb2ff}.k-credit{background:#3b2a12;color:#f2b35e}
+.k-rx{background:#3a1f38;color:#f39ad8}.k-supp{background:#1c3a22;color:#7fdc8f}.k-refill{background:#3a2420;color:#ff9a7a}
+.spot{font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:0 4px;margin-left:6px;text-transform:uppercase;letter-spacing:.04em}
+.adj{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px}
+.adj2{display:flex;gap:5px;margin-top:5px}
+.adj2 input{flex:1}
+.grp{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:700;margin:12px 0 4px}
+details{margin-top:14px}
+summary{color:var(--dim);min-height:36px;cursor:pointer}
+textarea{height:110px;font:12px/1.3 ui-monospace,monospace}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ember)}
+</style>
+</head>
+<body>
+<header><h1>Hearth <span>Ledger</span></h1><div id="status">Loading…</div></header>
+<p id="msg" role="status"></p>
+<div id="app" hidden>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+  <div id="add"></div>
+  <div id="pane"></div>
+  <details>
+    <summary>Backup</summary>
+    <p class="hint">Alerts stay silent 22:00–08:00 and go out at 08:00. Date-only items fall due at 08:00. Backup copies every item as text.</p>
+    <div class="row"><button id="showBackup">Show backup</button><button id="restore">Restore from text</button></div>
+    <textarea id="backup" aria-label="Backup text"></textarea>
+    <div class="row" id="restoreConfirm" hidden><button id="restoreYes" class="go">Replace everything</button><button id="restoreNo">Keep current</button></div>
+  </details>
+</div>
+<script>
+'use strict';
+/*LEDGER_JS*/
+
+let state, savedRaw, busy = false, locked = false;
+const ui = {tab: 'pantry', open: null, form: false};
+try { ui.tab = TABS.includes(localStorage.getItem('hl_tab')) ? localStorage.getItem('hl_tab') : 'pantry'; } catch (_) {}
+
+const $ = id => document.getElementById(id);
+const msg = t => { $('msg').textContent = t || ''; };
+const status = t => { $('status').textContent = t; };
+const item = id => state.items.find(x => x.id === id);
+
+async function act(change, after) {
+  if (busy || savedRaw === undefined || locked) return;
+  const before = JSON.stringify(state);
+  busy = true;
+  try {
+    change();
+    validate(state);
+    const next = JSON.stringify(state);
+    const stored = await storage({previous: savedRaw, next});
+    if (stored !== next) throw Error('Tasker could not verify the save. Reopen the ledger.');
+    savedRaw = stored;
+    status('Saved ' + clock(Date.now()));
+    msg('');
+    if (after) after();
+    render();
+    void runTask(REMINDER_TASK);
+  } catch (e) {
+    state = JSON.parse(before);
+    render();
+    msg(e.message || 'Could not save.');
+  } finally { busy = false; }
+}
+
+// ---- actions ----
+function add(t) {
+  act(() => { state.items.push(t); learn(state, t, Date.now()); }, () => { ui.form = false; });
+}
+// Done/Used/Paid/Taken: a repeating item re-arms, a one-off leaves the ledger.
+function finish(t) {
+  act(() => {
+    const x = item(t.id);
+    if (x.every) x.due = nextDue(x, Date.now()); else state.items = state.items.filter(i => i.id !== t.id);
+  }, () => { ui.open = null; });
+}
+const remove = id => act(() => { state.items = state.items.filter(t => t.id !== id); }, () => { ui.open = null; });
+const bump = (id, every) => act(() => { const t = item(id); t.due = plus(every, t.due); if (every.unit === 'mo') t.day = new Date(t.due).getDate(); });
+const setDue = (id, due) => act(() => { const t = item(id); t.due = due; if (t.every && t.every.unit === 'mo') t.day = new Date(due).getDate(); });
+
+// ---- long press: hold 500 ms on a learned chip to load it into the form ----
+function holdable(btn, onTap, onHold) {
+  let timer = null, held = false;
+  btn.addEventListener('pointerdown', () => { held = false; timer = setTimeout(() => { held = true; onHold(); }, 500); });
+  for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) btn.addEventListener(ev, () => clearTimeout(timer));
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+  btn.addEventListener('click', e => { if (held) { e.preventDefault(); return; } onTap(); });
+}
+
+// ---- rendering ----
+function el(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'on') e.onclick = v; else if (k === 'cls') e.className = v; else if (v != null) e.setAttribute(k, v);
+  }
+  for (const k of kids) if (k != null) e.append(k);
+  return e;
+}
+function pick(options, value) {
+  const s = el('select', {cls: 'narrow'}, ...options.map(([v, label]) => el('option', {value: v}, label)));
+  s.value = value;
+  return s;
+}
+
+function itemRow(t) {
+  const open = ui.open === t.id, kind = kindOf(t.tab, t.label);
+  const row = el('div', {cls: 't', 'data-due': t.due, 'data-tab': t.tab, 'data-grp': groupOf(t, Date.now())});
+  row.append(el('div', {cls: 'tl', role: 'button', tabindex: 0, on: () => { ui.open = open ? null : t.id; renderList(); }},
+    el('span', {cls: 'kind k-' + kind}, kind),
+    el('div', {cls: 'what'},
+      el('div', {cls: 'lbl'}, t.label, t.where ? el('span', {cls: 'spot'}, t.where) : null),
+      el('div', {cls: 'when'}, when(t.due) + (t.every ? ' · ' + everyText(t.every) : ''))),
+    el('span', {cls: 'cd'})));
+  if (open) {
+    row.append(el('div', {cls: 'adj'},
+      el('button', {cls: 'small go', on: () => finish(t)}, TAB[t.tab].done),
+      ...[[1, 'd', '+1d'], [7, 'd', '+1w'], [1, 'mo', '+1mo']].map(([n, unit, label]) =>
+        el('button', {cls: 'small', on: () => bump(t.id, {n, unit})}, label))));
+    const d = el('input', {type: 'date'}), tm = el('input', {type: 'time'});
+    d.value = dateInput(t.due);
+    if (!isMorning(t.due)) tm.value = pad(new Date(t.due).getHours()) + ':' + pad(new Date(t.due).getMinutes());
+    row.append(el('div', {cls: 'adj2'}, d, tm, el('button', {cls: 'small', on: () => {
+      const due = dueFromInput(d.value, tm.value);
+      if (due == null) return msg('Pick a date.');
+      setDue(t.id, due);
+    }}, 'Set')));
+    if (t.every) row.append(el('div', {cls: 'adj2'}, el('button', {cls: 'small', on: () => remove(t.id)}, 'Delete — stop repeating')));
+  }
+  return row;
+}
+
+function renderTabs() {
+  const now = Date.now();
+  $('tabs').replaceChildren(...TABS.map(tab => {
+    const mine = state.items.filter(t => t.tab === tab), over = mine.filter(t => t.due <= now).length;
+    return el('button', {role: 'tab', cls: ui.tab === tab ? 'on' : '', on: () => {
+      ui.tab = tab; ui.open = null; ui.form = false;
+      try { localStorage.setItem('hl_tab', tab); } catch (_) {}
+      render();
+    }}, TAB[tab].name, el('small', {}, mine.length + (mine.length === 1 ? ' item' : ' items'), over ? el('span', {cls: 'bad'}, String(over)) : null));
+  }));
+}
+
+function renderAdd() {
+  const tab = ui.tab, info = TAB[tab], book = state.settings.learned[tab];
+  const chips = Object.keys(book).sort((a, b) => book[b].count - book[a].count).slice(0, 16);
+  const now = Date.now();
+  const chipRow = chips.length ? el('div', {cls: 'lchips'}, ...chips.map(l => {
+    const rec = book[l];
+    const b = el('button', {}, l, el('small', {}, rec.every ? everyText(rec.every).replace('every ', '↻ ') : rec.days + 'd'));
+    holdable(b, () => add(fromLearned(tab, l, rec, Date.now())), () => { ui.form = {label: l, rec}; renderAdd(); });
+    return b;
+  })) : null;
+  const toggle = el('button', {cls: ui.form ? 'small' : 'small go', on: () => { ui.form = ui.form ? false : {}; renderAdd(); }}, ui.form ? 'Close' : '+ New ' + info.name.toLowerCase() + ' item');
+  if (!ui.form) {
+    $('add').replaceChildren(el('div', {}, chipRow, chips.length ? el('p', {cls: 'hint'}, 'Tap a chip to add it again · hold to tweak first') : null, el('div', {cls: 'row'}, toggle)));
+    return;
+  }
+  const pre = ui.form.rec || null;
+  const label = el('input', {placeholder: {pantry: 'Milk, chicken, leftovers…', chores: 'Water plants, trash night…', bills: 'Electric, car registration…', meds: 'Vitamin D, refill…'}[tab], maxlength: 60});
+  if (ui.form.label) label.value = ui.form.label;
+  const firstDue = pre ? fromLearned(tab, ui.form.label, pre, now).due : after(info.first, now);
+  const date = el('input', {type: 'date'}), time = el('input', {type: 'time'});
+  date.value = dateInput(firstDue);
+  if (!isMorning(firstDue)) time.value = pad(new Date(firstDue).getHours()) + ':' + pad(new Date(firstDue).getMinutes());
+  const every0 = pre ? pre.every : info.every;
+  const repeat = el('input', {type: 'number', min: 0, max: 365, inputmode: 'numeric', cls: 'narrow', placeholder: '—'});
+  if (every0) repeat.value = every0.n;
+  const unit = pick([['d', 'days'], ['h', 'hours'], ['mo', 'months']], every0 ? every0.unit : 'd');
+  const where = tab === 'pantry' ? pick(WHERES.map(w => [w, w]), (pre && pre.where) || 'fridge') : null;
+  const quick = [['Today', 0, 'd'], ['+3d', 3, 'd'], ['+1w', 7, 'd'], ['+2w', 14, 'd'], ['+1mo', 1, 'mo']].map(([txt, n, u]) =>
+    el('button', {cls: 'small', on: () => { date.value = dateInput(after({n, unit: u}, now)); time.value = ''; }}, txt));
+  const learned = ui.form.label && book[ui.form.label];
+  $('add').replaceChildren(el('section', {cls: 'card form'},
+    chipRow,
+    el('div', {cls: 'row'}, label, where),
+    el('div', {cls: 'hint'}, tab === 'pantry' ? 'Use by' : 'First due'),
+    el('div', {cls: 'row'}, date, el('div', {style: 'flex:0 0 120px'}, time)),
+    el('div', {cls: 'quick'}, ...quick),
+    el('div', {cls: 'row', style: 'align-items:center'}, el('span', {cls: 'hint', style: 'flex:0 0 auto'}, 'Repeat every'), repeat, unit),
+    el('div', {cls: 'row'},
+      el('button', {cls: 'go', on: () => {
+        const name = norm(label.value), due = dueFromInput(date.value, time.value), n = Number(repeat.value) || 0;
+        if (!name) return msg('Give it a name.');
+        if (due == null) return msg('Pick a date.');
+        if (n && !(Number.isInteger(n) && n <= 365)) return msg('Repeat must be a whole number up to 365.');
+        const t = {id: uid(), tab, label: name, due, every: n ? {n, unit: unit.value} : null};
+        if (where) t.where = where.value;
+        if (t.every && t.every.unit === 'mo') t.day = new Date(due).getDate();
+        add(t);
+      }}, 'Add'),
+      learned ? el('button', {cls: 'small', on: () => act(() => { delete state.settings.learned[tab][ui.form.label]; }, () => { ui.form = false; })}, 'Forget chip') : null,
+      toggle)));
+}
+
+function renderList() {
+  const now = Date.now();
+  const mine = state.items.filter(t => t.tab === ui.tab).sort((a, b) => a.due - b.due);
+  const groups = [['over', 'Overdue'], ['soon', 'Soon'], ['later', 'Later']]
+    .map(([g, name]) => [g, name, mine.filter(t => groupOf(t, now) === g)]).filter(([, , ts]) => ts.length);
+  $('pane').replaceChildren(...(groups.length ? groups.map(([g, name, ts]) => el('div', {},
+    el('div', {cls: 'grp'}, name + ' · ' + ts.length),
+    el('div', {cls: 'card ' + g}, ...ts.map(itemRow)))) : [el('p', {cls: 'hint'}, 'Nothing in ' + TAB[ui.tab].name.toLowerCase() + ' yet.')]));
+  tick();
+}
+
+function render() { renderTabs(); renderAdd(); renderList(); }
+function tick() {
+  const now = Date.now();
+  for (const row of document.querySelectorAll('[data-due]')) {
+    const due = Number(row.dataset.due);
+    // An item crossed into another group (soon -> overdue): rebuild the list, not the form.
+    if (row.dataset.grp !== groupOf({tab: row.dataset.tab, due}, now)) { renderTabs(); return renderList(); }
+    row.querySelector('.cd').textContent = left(due, now);
+    row.classList.toggle('over', due <= now);
+    row.classList.toggle('soon', due > now && TAB[row.dataset.tab].soon(due, now));
+  }
+}
+
+$('showBackup').onclick = () => { $('backup').value = locked ? savedRaw : JSON.stringify(state); };
+$('restore').onclick = () => { $('restoreConfirm').hidden = false; };
+$('restoreNo').onclick = () => { $('restoreConfirm').hidden = true; };
+$('restoreYes').onclick = () => {
+  $('restoreConfirm').hidden = true;
+  let next;
+  try { next = validate(migrate(JSON.parse($('backup').value))); } catch (e) { return msg('That text is not a Hearth Ledger backup: ' + e.message); }
+  locked = false;
+  act(() => { state = next; });
+};
+
+async function init() {
+  try {
+    await waitForBridge(5000);
+    const {raw, state: s} = await loadLedger();
+    savedRaw = raw;
+    if (s) state = s; else { locked = true; state = fresh(); msg('Saved data could not be read, so editing is locked. Backup shows the raw text.'); }
+    status(locked ? 'Read-only' : raw === '' ? 'New ledger' : 'Loaded');
+    $('app').hidden = false;
+    render();
+  } catch (e) { status('Storage unavailable'); msg(e.message || 'Could not load from Tasker.'); }
+}
+setInterval(() => { if (state) tick(); }, 1000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && state) { renderTabs(); renderList(); } });
+void init();
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<TaskerData sr="" dvi="1" tv="6.7.9">
+	<dmetric>1080.0,2424.0</dmetric>
+	<Profile sr="prof903" ve="2">
+		<id>903</id>
+		<nme>Hearth Ledger Due</nme>
+		<Time sr="con0">
+			<fromvar>%HearthLedgerNext</fromvar>
+			<th>-1</th>
+			<tm>-1</tm>
+		</Time>
+		<mid0>901</mid0>
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<flags>8</flags>
+	</Profile>
+	<Profile sr="prof904" ve="2">
+		<id>904</id>
+		<nme>Hearth Ledger Poll</nme>
+		<Time sr="con0">
+			<repval>5</repval>
+			<fh>-1</fh>
+			<fm>-1</fm>
+			<th>-1</th>
+			<tm>-1</tm>
+			<rep>2</rep>
+		</Time>
+		<mid0>901</mid0>
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<flags>8</flags>
+	</Profile>
+	<Project sr="proj0" ve="2">
+		<cdate>1795521476000</cdate>
+		<id>76c7afe7-dcdd-4d7d-83dd-13ae13298a9b</id>
+		<name>Hearth Ledger</name>
+		<pids>903,904</pids>
+		<scenes>Hearth Ledger</scenes>
+		<tids>900,901,902</tids>
+	</Project>
+	<Scene sr="sceneHearth Ledger">
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<heightLand>-1</heightLand>
+		<heightPort>-1</heightPort>
+		<lj>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</lj>
+		<nme>Hearth Ledger</nme>
+		<widthLand>-1</widthLand>
+		<widthPort>-1</widthPort>
+	</Scene>
+	<Task sr="task900">
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<id>900</id>
+		<nme>Hearth Ledger Storage</nme>
+		<Action sr="act0" ve="7">
+			<code>129</code>
+			<Str sr="arg0" ve="3">// Hearth Ledger Storage — Tasker JavaScriptlet. The scene calls this through
+// Tasker.runTaskForResult with hl_request (packed {previous, next}) to save, or
+// with no request to load. The next action returns hl_reply, packed the same way.
+// Packing turns every percent sign into "~" so Tasker never expands a variable
+// inside the payload. Cloned from Ludomancery/FrostLedger/storage.js.
+var hl_reply = '';
+function packReply(reply) {
+  return encodeURIComponent(JSON.stringify(reply)).replace(/~/g, '%7E').replace(/%/g, '~');
+}
+function unset(v) {
+  return v === undefined || v === null || v === '' || v === 'undefined' || /^%\w+$/.test(v);
+}
+try {
+  var current = global('HearthLedger');
+  if (unset(current)) current = '';
+  var req = typeof hl_request === 'string' &amp;&amp; !unset(hl_request) ? hl_request : '';
+  if (req) {
+    var r = JSON.parse(decodeURIComponent(req.replace(/~/g, '%')));
+    // Compare-and-set: refuse a save built on data that changed under us.
+    if (current !== r.previous &amp;&amp; current !== r.next) {
+      throw Error('The ledger changed elsewhere. Close and reopen Hearth Ledger.');
+    }
+    var d = JSON.parse(r.next);
+    if (d.version !== 1 || !Array.isArray(d.items) || !d.settings) {
+      throw Error('Invalid ledger data.');
+    }
+    if (current !== r.next) setGlobal('HearthLedger', r.next);
+    current = global('HearthLedger');
+    if (current !== r.next) throw Error('Tasker could not verify the save.');
+  }
+  hl_reply = packReply({ ok: true, value: current });
+} catch (e) {
+  hl_reply = packReply({ ok: false, error: e.message || 'Could not reach Tasker storage.' });
+}
+</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">%hl_reply</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+	</Task>
+	<Task sr="task901">
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<id>901</id>
+		<nme>Hearth Ledger Reminder</nme>
+		<Action sr="act0" ve="7">
+			<code>129</code>
+			<Str sr="arg0" ve="3">// Hearth Ledger Reminder — Tasker JavaScriptlet. Run by the Due profile (at
+// HearthLedgerNext), the Poll profile, and the scene after each save.
+// Everything due and not yet announced goes into ONE notification; keys are
+// only marked announced by the ack step after Notify succeeds.
+// Announced keys are "id@due", not the id: a chore marked Done keeps its id but
+// gets a new due, and must be able to alert again.
+// Quiet hours 22:00-08:00 local: nothing is announced, nothing is acked, and
+// the next wake is moved to 08:00 so deferred items go out then.
+var hl_notify = 'no';
+var hl_title = '';
+var hl_text = '';
+var hl_ids = '[]';
+var QUIET_FROM = 22, QUIET_TO = 8;
+// Items due within this window ride along in the same notification.
+var BATCH_MS = 60000;
+var NAMES = { pantry: 'Pantry', chores: 'Chores', bills: 'Bills', meds: 'Meds' };
+function unset(v) {
+  return v === undefined || v === null || v === '' || v === 'undefined' || /^%\w+$/.test(v);
+}
+function quietAt(ms) {
+  var h = new Date(ms).getHours();
+  return h &gt;= QUIET_FROM || h &lt; QUIET_TO;
+}
+function quietEnd(ms) {
+  var d = new Date(ms);
+  if (d.getHours() &gt;= QUIET_FROM) d.setDate(d.getDate() + 1);
+  d.setHours(QUIET_TO, 0, 0, 0);
+  return d.getTime();
+}
+function pad(n) { return (n &lt; 10 ? '0' : '') + n; }
+function key(t) { return t.id + '@' + t.due; }
+try {
+  var raw = global('HearthLedger');
+  var data = unset(raw) ? {} : JSON.parse(raw);
+  var seen;
+  try { seen = JSON.parse(global('HearthLedgerSeen') || '[]'); } catch (e) { seen = []; }
+  if (!Array.isArray(seen)) seen = [];
+  var now = Date.now();
+  var items = Array.isArray(data.items) ? data.items : [];
+  var fresh = items.filter(function (t) { return isFinite(t.due) &amp;&amp; seen.indexOf(key(t)) &lt; 0; });
+  var due = fresh.filter(function (t) { return t.due &lt;= now + BATCH_MS; })
+    .sort(function (a, b) { return a.due - b.due; });
+  var quiet = quietAt(now);
+  if (due.length &amp;&amp; !quiet) {
+    hl_notify = 'yes';
+    var when = new Date(now);
+    hl_title = 'Hearth Ledger: ' + due.length + ' due · ' + pad(when.getHours()) + ':' + pad(when.getMinutes());
+    hl_text = due.map(function (t) { return (NAMES[t.tab] || 'Item') + ' — ' + t.label; }).join('\n');
+    hl_ids = JSON.stringify(due.map(key));
+  }
+  // Next wake: the soonest deadline not covered by this run, or quiet-hours end when something is waiting.
+  var next = Infinity;
+  fresh.forEach(function (t) { if (t.due &gt; now + BATCH_MS &amp;&amp; t.due &lt; next) next = t.due; });
+  if (due.length &amp;&amp; quiet) next = Math.min(next, quietEnd(now));
+  if (next !== Infinity &amp;&amp; quietAt(next)) next = quietEnd(next);
+  // Epoch seconds, rounded up to the next whole minute (Time contexts are minute-grained).
+  setGlobal('HearthLedgerNext', next === Infinity ? 'off' : String(Math.ceil(next / 60000) * 60));
+} catch (e) {
+  hl_notify = 'no';
+}
+</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%hl_notify</lhs>
+					<op>0</op>
+					<rhs>yes</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>523</code>
+			<Str sr="arg0" ve="3">%hl_title</Str>
+			<Str sr="arg1" ve="3">%hl_text</Str>
+			<Img sr="arg2" ve="2"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<Int sr="arg6" val="0"/>
+			<Int sr="arg7" val="0"/>
+			<Int sr="arg8" val="0"/>
+			<Str sr="arg9" ve="3"/>
+			<Str sr="arg10" ve="3"/>
+			<Str sr="arg11" ve="3">Information</Str>
+			<Str sr="arg12" ve="3"/>
+			<Int sr="arg13" val="0"/>
+			<Str sr="arg14" ve="3"/>
+			<Str sr="arg15" ve="3"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>129</code>
+			<Str sr="arg0" ve="3">// Hearth Ledger Reminder, step 2 — runs only after Notify succeeded. Marks the
+// announced id@due keys and drops keys that no longer match a live item (done,
+// deleted, or moved to a new due).
+var seen;
+try { seen = JSON.parse(global('HearthLedgerSeen') || '[]'); } catch (e) { seen = []; }
+if (!Array.isArray(seen)) seen = [];
+var live = [];
+try { live = JSON.parse(global('HearthLedger')).items.map(function (t) { return t.id + '@' + t.due; }); } catch (e) {}
+var merged = seen.concat(JSON.parse(hl_ids)).filter(function (k, i, all) {
+  return all.indexOf(k) === i &amp;&amp; live.indexOf(k) &gt;= 0;
+});
+setGlobal('HearthLedgerSeen', JSON.stringify(merged));
+</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+			<Int sr="arg3" val="45"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>38</code>
+		</Action>
+	</Task>
+	<Task sr="task902">
+		<cdate>1795521476000</cdate>
+		<edate>1795521476000</edate>
+		<id>902</id>
+		<nme>Hearth Ledger Open</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>479</code>
+			<Bundle sr="arg0">
+				<Vals sr="val"/>
+			</Bundle>
+			<Str sr="arg1" ve="3">Hearth Ledger</Str>
+			<Str sr="arg10" ve="3"/>
+			<Str sr="arg11" ve="3"/>
+			<Int sr="arg12" val="0"/>
+			<Int sr="arg13" val="0"/>
+			<Int sr="arg14" val="0"/>
+			<Str sr="arg15" ve="3"/>
+			<Int sr="arg16" val="1"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3">Dialog</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Int sr="arg8" val="1"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+	</Task>
+</TaskerData>
