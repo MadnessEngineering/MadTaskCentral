@@ -25,6 +25,16 @@ cd ../../mobile/Digitomancy && uv run dgm tasker-sync push "Hearth Ledger" --yes
 ```
 Open it with the **Hearth Ledger Open** task.
 
+**Importing from outside the scene** (e.g. dates read off grocery photos):
+```
+node HearthLedger/send.mjs batches/2026-11-25-fridge.json --dry LEDGER.json   # preview against a copy
+node HearthLedger/send.mjs batches/2026-11-25-fridge.json                     # dgm tasker "Hearth Ledger Import"
+```
+A batch is `{items:[{tab?, label, use_by: "YYYY-MM-DD" | days, where?, every?, note?}]}`.
+Notes record how each date was read and are not sent. An item whose tab, label and due day are
+already in the ledger is skipped, so sending the same batch again is safe. `batches/` is
+gitignored because it holds copies of the phone ledger.
+
 Sources live in `HearthLedger/`: `scene.html` (UI), `ledger.js` (model, inlined into the page),
 `storage.js` (compare-and-set save), `reminder.js` + `ack.js` (notifications), and `build.py`.
 `build.py` refuses any `%word` in the page sources, because the bridge WebView would expand it.
@@ -32,5 +42,7 @@ Sources live in `HearthLedger/`: `scene.html` (UI), `ledger.js` (model, inlined 
 ### Status
 - Verified locally: the build runs and the smoke test passes. The page also renders, adds items
   and re-arms chores in headless Chrome against a mock bridge that runs the real `storage.js`.
-- Not yet verified on the phone: bridge load/save, notifications firing.
+- Verified on the phone (2026-11-25, read via `dgm var`): items saved from the scene, and a due chore
+  notified; `HearthLedgerSeen` holds its key, which ack only writes after Notify succeeds.
+- Not yet verified on the phone: the Import task (needs the 2026-11-25 build imported).
 - Imported on the Pixel 2026-11-24; task/profile ids in build.py match what the phone assigned.

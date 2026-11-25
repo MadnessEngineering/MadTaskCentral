@@ -174,6 +174,48 @@ test('nothing pending turns the Due profile off', () => {
   assert.equal(vars.HearthLedgerNext, 'off');
 });
 
+// ---- import.js ----
+function importRun(vars, items, now = NOW) {
+  const ctx = vm.createContext({
+    global: k => (k in vars ? vars[k] : ''), setGlobal: (k, v) => { vars[k] = String(v); },
+    par1: pack(JSON.stringify({items})), window: {},
+  });
+  vm.runInContext(`Date.now = () => ${now};`, ctx);
+  vm.runInContext(src('import.js').replace('/*LEDGER_JS*/', src('ledger.js')), ctx);
+  return ctx.hl_reply;
+}
+test('import adds dated items at 08:00, learns chips, and skips repeats', () => {
+  const vars = {HearthLedger: book([item({id: 'm', label: 'milk', due: at(2026, 12, 8, 8)})])};
+  const batch = [
+    {label: 'Garden Salad Blend', use_by: '2026-11-28'},
+    {label: 'cabot habanero cheddar', use_by: '2027-05-14', where: 'fridge'},
+    {label: 'pistachio & berries', days: 120, where: 'pantry'},
+    {label: 'milk', use_by: '2026-12-08'},
+  ];
+  assert.match(importRun(vars, batch), /^added 3 .*; skipped 1 already there \(milk\)$/);
+  const s = JSON.parse(vars.HearthLedger);
+  const salad = s.items.find(t => t.label === 'garden salad blend');
+  assert.equal(salad.due, at(2026, 11, 28, 8));
+  assert.equal(salad.where, 'fridge', 'pantry items default to the fridge');
+  assert.equal(s.items.find(t => t.label === 'pistachio & berries').due, at(2027, 3, 24, 8));
+  assert.equal(s.settings.learned.pantry['cabot habanero cheddar'].where, 'fridge');
+  assert.match(importRun(vars, batch), /^added 0; skipped 4/, 'same batch again changes nothing');
+});
+test('import rejects a bad date without saving anything', () => {
+  const vars = {HearthLedger: book([])};
+  assert.match(importRun(vars, [{label: 'eggs', use_by: '2026-11-28'}, {label: 'x', use_by: 'Nov 28'}]), /^error: Bad date for x/);
+  assert.equal(JSON.parse(vars.HearthLedger).items.length, 0);
+});
+test('chips: cheeses are dairy, pepperoni is meat, trail mix is a snack', () => {
+  const L = ledger();
+  assert.equal(L(`kindOf('pantry', 'cabot habanero cheddar')`), 'dairy');
+  assert.equal(L(`kindOf('pantry', 'mozzarella shredded')`), 'dairy');
+  assert.equal(L(`kindOf('pantry', 'good & gather colby jack')`), 'dairy');
+  assert.equal(L(`kindOf('pantry', 'hormel pepperoni')`), 'meat');
+  assert.equal(L(`kindOf('pantry', 'pistachio & berries')`), 'snack');
+  assert.equal(L(`kindOf('pantry', 'garden salad blend')`), 'produce');
+});
+
 // ---- scene.html ----
 test('scene script parses with the ledger inlined', () => {
   const html = src('scene.html').replace('/*LEDGER_JS*/', src('ledger.js'));

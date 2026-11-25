@@ -142,10 +142,13 @@ const groupOf = (t, now) => t.due <= now ? 'over' : TAB[t.tab].soon(t.due, now) 
 function kindOf(tab, label) {
   const l = label;
   if (tab === 'pantry') {
-    return /milk|cheese|yogurt|yoghurt|butter|cream|egg/.test(l) ? 'dairy'
-      : /chicken|beef|pork|steak|turkey|fish|salmon|shrimp|bacon|sausage|ham|meat/.test(l) ? 'meat'
+    // Order matters: 'habanero cheddar' is dairy before produce's pepper; 'pepperoni' is meat;
+    // 'pistachio & berries' is a snack, not produce (lessons from the first fridge import).
+    return /milk|cheese|cheddar|mozzarella|colby|jack\b|parmesan|swiss|provolone|gouda|brie|feta|ricotta|yogurt|yoghurt|butter|cream|egg/.test(l) ? 'dairy'
+      : /chicken|beef|pork|steak|turkey|fish|salmon|shrimp|bacon|sausage|pepperoni|salami|ham|meat/.test(l) ? 'meat'
       : /left ?over|soup|chili|pasta|rice|curry|takeout/.test(l) ? 'leftover'
       : /bread|bun|bagel|tortilla|roll|muffin/.test(l) ? 'bread'
+      : /pistachio|almond|cashew|peanut|nut\b|nuts|trail mix|chip|cracker|pretzel|granola|cookie|candy|snack/.test(l) ? 'snack'
       : /lettuce|salad|spinach|apple|banana|berr|tomato|onion|pepper|avocado|carrot|potato|fruit|veg|herb|cilantro|lemon|lime/.test(l) ? 'produce'
       : 'other';
   }

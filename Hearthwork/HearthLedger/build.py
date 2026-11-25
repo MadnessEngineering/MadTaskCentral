@@ -28,6 +28,7 @@ SCENE = "Hearth Ledger"
 STAMP = 1795521476000  # keep stable so rebuilds diff cleanly
 # ids as the phone assigned them on first import (2026-11-24), so exports diff cleanly
 T_STORAGE, T_REMINDER, T_OPEN, P_DUE, P_POLL = 399, 402, 403, 404, 414
+T_IMPORT = 420  # placeholder until the phone assigns one
 POLL_MINUTES = 5
 
 
@@ -78,7 +79,8 @@ def build() -> str:
     storage = (HERE / "storage.js").read_text()
     reminder = (HERE / "reminder.js").read_text()
     ack = (HERE / "ack.js").read_text()
-    for name, text in (("scene.html", html), ("storage.js", storage), ("reminder.js", reminder), ("ack.js", ack)):
+    imp = (HERE / "import.js").read_text().replace("/*LEDGER_JS*/", shared)
+    for name, text in (("scene.html", html), ("storage.js", storage), ("reminder.js", reminder), ("ack.js", ack), ("import.js", imp)):
         no_tasker_vars(name, text)
 
     return f"""<TaskerData sr="" dvi="1" tv="6.7.9">
@@ -118,7 +120,7 @@ def build() -> str:
 		<name>{PROJECT}</name>
 		<pids>{P_DUE},{P_POLL}</pids>
 		<scenes>{SCENE}</scenes>
-		<tids>{T_STORAGE},{T_REMINDER},{T_OPEN}</tids>
+		<tids>{T_STORAGE},{T_REMINDER},{T_OPEN},{T_IMPORT}</tids>
 	</Project>
 	<Scene sr="scene{SCENE}">
 		<cdate>{STAMP}</cdate>
@@ -212,6 +214,38 @@ def build() -> str:
 			<Str sr="arg7" ve="3"/>
 			<Int sr="arg8" val="1"/>
 			<Str sr="arg9" ve="3"/>
+		</Action>
+	</Task>
+	<Task sr="task{T_IMPORT}">
+		<cdate>{STAMP}</cdate>
+		<edate>{STAMP}</edate>
+		<id>{T_IMPORT}</id>
+		<nme>Hearth Ledger Import</nme>
+{js_action("act0", imp)}
+		<Action sr="act1" ve="7">
+			<code>130</code>
+			<label>refresh the next wake for the new items; no return variable, so it does not wait</label>
+			<Str sr="arg0" ve="3">Hearth Ledger Reminder</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Int sr="arg10" val="0"/>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+			<Int sr="arg6" val="0"/>
+			<Str sr="arg7" ve="3"/>
+			<Int sr="arg8" val="0"/>
+			<Int sr="arg9" val="0"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">%hl_reply</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
 		</Action>
 	</Task>
 </TaskerData>
