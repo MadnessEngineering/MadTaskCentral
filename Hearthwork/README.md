@@ -46,5 +46,8 @@ Sources live in `HearthLedger/`: `scene.html` (UI), `ledger.js` (model, inlined 
   and re-arms chores in headless Chrome against a mock bridge that runs the real `storage.js`.
 - Verified on the phone (2026-11-25, read via `dgm var`): items saved from the scene, and a due chore
   notified; `HearthLedgerSeen` holds its key, which ack only writes after Notify succeeds.
-- Not yet verified on the phone: the Import task (needs the 2026-11-25 build imported).
-- Imported on the Pixel 2026-11-24; task/profile ids in build.py match what the phone assigned.
+- Verified on the phone (2026-11-25): the Import task added the 12-item fridge batch (read back with
+  `dgm var HearthLedger`), the reminder's next wake moved to the earliest new item, and re-sending
+  the batch skipped all 12.
+- Task/profile ids in build.py match the phone's 2026-11-25 import. `dgm tasker-sync push` deletes and
+  re-imports the project, which renumbers them, so copy the new ids in after each push.

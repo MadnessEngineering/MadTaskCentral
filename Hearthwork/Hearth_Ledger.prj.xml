@@ -1,20 +1,20 @@
 <TaskerData sr="" dvi="1" tv="6.7.9">
 	<dmetric>1080.0,2424.0</dmetric>
-	<Profile sr="prof404" ve="2">
-		<id>404</id>
+	<Profile sr="prof442" ve="2">
+		<id>442</id>
 		<nme>Hearth Ledger Due</nme>
 		<Time sr="con0">
 			<fromvar>%HearthLedgerNext</fromvar>
 			<th>-1</th>
 			<tm>-1</tm>
 		</Time>
-		<mid0>402</mid0>
+		<mid0>435</mid0>
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
 		<flags>8</flags>
 	</Profile>
-	<Profile sr="prof414" ve="2">
-		<id>414</id>
+	<Profile sr="prof447" ve="2">
+		<id>447</id>
 		<nme>Hearth Ledger Poll</nme>
 		<Time sr="con0">
 			<repval>5</repval>
@@ -24,7 +24,7 @@
 			<tm>-1</tm>
 			<rep>2</rep>
 		</Time>
-		<mid0>402</mid0>
+		<mid0>435</mid0>
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
 		<flags>8</flags>
@@ -33,9 +33,9 @@
 		<cdate>1795521476000</cdate>
 		<id>76c7afe7-dcdd-4d7d-83dd-13ae13298a9b</id>
 		<name>Hearth Ledger</name>
-		<pids>404,414</pids>
+		<pids>442,447</pids>
 		<scenes>Hearth Ledger</scenes>
-		<tids>399,402,403,420</tids>
+		<tids>434,435,436,441</tids>
 	</Project>
 	<Scene sr="sceneHearth Ledger">
 		<cdate>1795521476000</cdate>
@@ -47,10 +47,10 @@
 		<widthLand>-1</widthLand>
 		<widthPort>-1</widthPort>
 	</Scene>
-	<Task sr="task399">
+	<Task sr="task434">
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
-		<id>399</id>
+		<id>434</id>
 		<nme>Hearth Ledger Storage</nme>
 		<Action sr="act0" ve="7">
 			<code>129</code>
@@ -102,10 +102,10 @@ try {
 			<Str sr="arg4" ve="3"/>
 		</Action>
 	</Task>
-	<Task sr="task402">
+	<Task sr="task435">
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
-		<id>402</id>
+		<id>435</id>
 		<nme>Hearth Ledger Reminder</nme>
 		<Action sr="act0" ve="7">
 			<code>129</code>
@@ -226,10 +226,10 @@ setGlobal('HearthLedgerSeen', JSON.stringify(merged));
 			<code>38</code>
 		</Action>
 	</Task>
-	<Task sr="task403">
+	<Task sr="task436">
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
-		<id>403</id>
+		<id>436</id>
 		<nme>Hearth Ledger Open</nme>
 		<pri>100</pri>
 		<Action sr="act0" ve="7">
@@ -255,10 +255,10 @@ setGlobal('HearthLedgerSeen', JSON.stringify(merged));
 			<Str sr="arg9" ve="3"/>
 		</Action>
 	</Task>
-	<Task sr="task420">
+	<Task sr="task441">
 		<cdate>1795521476000</cdate>
 		<edate>1795521476000</edate>
-		<id>420</id>
+		<id>441</id>
 		<nme>Hearth Ledger Import</nme>
 		<Action sr="act0" ve="7">
 			<code>547</code>
