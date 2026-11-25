@@ -221,8 +221,19 @@ def build() -> str:
 		<edate>{STAMP}</edate>
 		<id>{T_IMPORT}</id>
 		<nme>Hearth Ledger Import</nme>
-{js_action("act0", imp)}
-		<Action sr="act1" ve="7">
+		<Action sr="act0" ve="7">
+			<code>547</code>
+			<label>par1 into a named local: the JavaScriptlet did not see par1 directly</label>
+			<Str sr="arg0" ve="3">%hl_in</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<Int sr="arg6" val="0"/>
+		</Action>
+{js_action("act1", imp)}
+		<Action sr="act2" ve="7">
 			<code>130</code>
 			<label>refresh the next wake for the new items; no return variable, so it does not wait</label>
 			<Str sr="arg0" ve="3">Hearth Ledger Reminder</Str>
@@ -239,7 +250,7 @@ def build() -> str:
 			<Int sr="arg8" val="0"/>
 			<Int sr="arg9" val="0"/>
 		</Action>
-		<Action sr="act2" ve="7">
+		<Action sr="act3" ve="7">
 			<code>126</code>
 			<Str sr="arg0" ve="3">%hl_reply</Str>
 			<Int sr="arg1" val="1"/>

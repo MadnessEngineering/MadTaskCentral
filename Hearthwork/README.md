@@ -31,7 +31,9 @@ node HearthLedger/send.mjs batches/2026-11-25-fridge.json --dry LEDGER.json   # 
 node HearthLedger/send.mjs batches/2026-11-25-fridge.json                     # dgm tasker "Hearth Ledger Import"
 ```
 A batch is `{items:[{tab?, label, use_by: "YYYY-MM-DD" | days, where?, every?, note?}]}`.
-Notes record how each date was read and are not sent. An item whose tab, label and due day are
+Notes record how each date was read and are not sent. Receipt lines can leave out the date and
+days: the item then restarts the shelf life and storage spot its chip learned (an undated item
+with no chip is refused). An item whose tab, label and due day are
 already in the ledger is skipped, so sending the same batch again is safe. `batches/` is
 gitignored because it holds copies of the phone ledger.
 

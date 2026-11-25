@@ -1,6 +1,6 @@
 // Send a batch of items to the phone through the Hearth Ledger Import task.
 //   node HearthLedger/send.mjs batches/x.json --dry LEDGER.json   # run import.js here against a copy
-//   node HearthLedger/send.mjs batches/x.json                     # dgm tasker "Hearth Ledger Import"
+//   node HearthLedger/send.mjs batches/x.json                     # dgm tasker "Hearth Ledger Import" -p par1=…
 // A batch is {items:[{tab?, label, use_by? | days?, where?, every?, note?}]}; notes stay on this
 // side (they record how a date was read) and are not sent.
 import {readFileSync} from 'node:fs';
@@ -29,6 +29,6 @@ if (flag === '--dry') {
 } else {
   const dgm = new URL('../../../mobile/Digitomancy/', here).pathname;
   const out = execFileSync('uv', ['run', 'dgm', ...(process.env.DGM_DEVICE ? ['-d', process.env.DGM_DEVICE] : []),
-    'tasker', 'Hearth Ledger Import', 'par1=' + par1, '--wait', '20'], {cwd: dgm, encoding: 'utf8'});
+    'tasker', 'Hearth Ledger Import', '-p', 'par1=' + par1, '--wait', '20'], {cwd: dgm, encoding: 'utf8'});
   console.log(out);
 }

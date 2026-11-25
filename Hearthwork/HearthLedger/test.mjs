@@ -201,6 +201,16 @@ test('import adds dated items at 08:00, learns chips, and skips repeats', () => 
   assert.equal(s.settings.learned.pantry['cabot habanero cheddar'].where, 'fridge');
   assert.match(importRun(vars, batch), /^added 0; skipped 4/, 'same batch again changes nothing');
 });
+test('receipt lines (no date) restart the learned shelf life; unknown undated items are refused', () => {
+  const vars = {HearthLedger: book([])};
+  importRun(vars, [{label: 'milk', use_by: '2026-12-08', where: 'fridge'}, {label: 'bagels', days: 5, where: 'pantry'}]);
+  const later = at(2026, 12, 10, 12);
+  assert.match(importRun(vars, [{label: 'milk'}, {label: 'bagels'}], later), /^added 2/);
+  const s = JSON.parse(vars.HearthLedger);
+  assert.equal(s.items.filter(t => t.label === 'milk').pop().due, at(2026, 12, 24, 8), '14 days learned from the first carton');
+  assert.equal(s.items.filter(t => t.label === 'bagels').pop().where, 'pantry', 'spot comes from the chip too');
+  assert.match(importRun(vars, [{label: 'dragonfruit'}], later), /^error: No date and no learned shelf life for dragonfruit/);
+});
 test('import rejects a bad date without saving anything', () => {
   const vars = {HearthLedger: book([])};
   assert.match(importRun(vars, [{label: 'eggs', use_by: '2026-11-28'}, {label: 'x', use_by: 'Nov 28'}]), /^error: Bad date for x/);
